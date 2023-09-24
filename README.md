@@ -11,7 +11,6 @@
 ├── app
 │   └── main.cpp
 ├── include
-│   ├── example.h
 │   ├── exampleConfig.h.in
 │   ├── cli_app.h
 │   ├── position_models.h
