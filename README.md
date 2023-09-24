@@ -1,9 +1,10 @@
-[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
-[![CI](https://github.com/sneddonlewis/matcher/actions/workflows/ci.yml/badge.svg)](https://github.com/sneddonlewis/matcher/actions/workflows/ci.yml)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.]
+(http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
+[![CI](https://github.com/sneddonlewis/port_mgmt/actions/workflows/ci.yml/badge.svg)]
+(https://github.com/sneddonlewis/port_mgmt/actions/workflows/ci.yml)
 
-# Matcher
+# Portfolio Management
 
-CLI memory game. Match pairs of cards.
 
 ## Structure
 ``` text
@@ -12,9 +13,9 @@ CLI memory game. Match pairs of cards.
 ├── app
 │   └── main.cpp
 ├── include
-│   ├── word.h
+│   ├── example.h
 ├── src
-│   └── word.cpp
+│   └── example.cpp
 └── tests
     ├── dummy.cpp
     └── main.cpp
