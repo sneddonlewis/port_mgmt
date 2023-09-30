@@ -49,6 +49,10 @@ set(LIBRARY_NAME engine)  # Default name for the library built from src/*.cpp (c
 # --------------------------------------------------------------------------------
 #                            Build! (Change as needed)
 # --------------------------------------------------------------------------------
+# Check if using Clang or AppleClang
+if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "AppleClang")
+    add_compile_options(-Wno-zero-as-null-pointer-constant)  # This should be before add_library and add_executable
+endif()
 # Compile all sources into a library.
 add_library(${LIBRARY_NAME} OBJECT ${SOURCES})
 
