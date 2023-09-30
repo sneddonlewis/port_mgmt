@@ -1,13 +1,16 @@
 #pragma once
+#include <memory>
 #include "position_models.h"
+#include "iposition_repository.h"
 #include "position_repository.h"
 
 class CliApp final {
 public:
-    CliApp(PositionRepository positionRepository);
+    explicit CliApp(std::shared_ptr<IPositionRepo> positionRepository);
+    ~CliApp() = default;
     void loop();
 private:
-    PositionRepository _positionRepository;
+    std::shared_ptr<IPositionRepo> _positionRepository;
 
     AddPositionRequest build_add_position_request();
     void add_position_handler();

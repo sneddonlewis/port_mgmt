@@ -2,14 +2,15 @@
 
 #include <vector>
 
+#include "iposition_repository.h"
 #include "position_models.h"
 
-class PositionRepository final {
+class PositionRepository final : public IPositionRepo {
 public:
     PositionRepository();
-    Position OpenPosition(AddPositionRequest positionRequest);
-    std::vector<Position> GetAllOpenPositions();
-    user_size_t OpenPositionCount();
+    Position OpenPosition(AddPositionRequest positionRequest) override;
+    std::vector<Position> GetAllOpenPositions() override;
+    std::size_t OpenPositionCount() override;
 private:
     std::vector<Position> _positions;
 };

@@ -1,15 +1,18 @@
 #include "cli_app.h"
 #include "position_models.h"
+#include "iposition_repository.h"
 #include "exampleConfig.h"
 
+#include <algorithm>
 #include <iostream>
 #include <ostream>
 #include <chrono>
 #include <iomanip>
 #include <sstream>
+#include <utility>
 
-CliApp::CliApp(PositionRepository positionRepository)
-    : _positionRepository{positionRepository} {}
+CliApp::CliApp(std::shared_ptr<IPositionRepo> positionRepository)
+    : _positionRepository{std::move(positionRepository)} {}
 
 static auto clear_console() -> void {
     // Unix to clear the screen
@@ -79,17 +82,17 @@ auto CliApp::add_position_handler() -> void {
     clear_console();
     std::cout << "Add" << std::endl;
     AddPositionRequest request = this->build_add_position_request();
-    _positionRepository.OpenPosition(request);
+    _positionRepository->OpenPosition(request);
     clear_console();
 }
 
 auto CliApp::view_positions_handler() -> void {
     clear_console();
     std::cout << "View" << std::endl;
-    std::cout << _positionRepository.OpenPositionCount()
+    std::cout << _positionRepository->OpenPositionCount()
         << " Open Positions"
         << std::endl << std::endl;
-    auto open_positions = _positionRepository.GetAllOpenPositions();
+    auto open_positions = _positionRepository->GetAllOpenPositions();
     auto print_position = [](Position p) {
         std::string direction = p.is_long ? "Long" : "Short";
         std::time_t time = std::chrono::system_clock::to_time_t(p.open_timestamp);
