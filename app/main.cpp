@@ -1,8 +1,4 @@
-// Executables must have the following defined if the library contains
-// doctest definitions. For builds with this disabled, e.g. code shipped to
-// users, this can be left out.
-#include <iostream>
-#include <ostream>
+#include <memory>
 #ifdef ENABLE_DOCTEST_IN_LIBRARY
 #define DOCTEST_CONFIG_IMPLEMENT
 #include "doctest/doctest.h"
@@ -12,9 +8,10 @@
 #include "position_repository.h"
 
 int main() {
-    PositionRepository positionRepository = PositionRepository{};
+    using namespace std;
+    auto repo = make_shared<PositionRepository>();
     CliApp app = CliApp{
-        positionRepository
+        repo
     };
     app.loop();
     return 0;
