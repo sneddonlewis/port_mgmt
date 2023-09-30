@@ -3,6 +3,7 @@
 #include "iposition_repository.h"
 #include "exampleConfig.h"
 
+#include <algorithm>
 #include <iostream>
 #include <ostream>
 #include <chrono>
