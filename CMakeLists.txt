@@ -49,6 +49,10 @@ set(LIBRARY_NAME engine)  # Default name for the library built from src/*.cpp (c
 # --------------------------------------------------------------------------------
 #                            Build! (Change as needed)
 # --------------------------------------------------------------------------------
+# Check if using Clang or AppleClang
+if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "AppleClang")
+    add_compile_options(-Wno-zero-as-null-pointer-constant)  # This should be before add_library and add_executable
+endif()
 # Compile all sources into a library.
 add_library(${LIBRARY_NAME} OBJECT ${SOURCES})
 
@@ -72,6 +76,8 @@ target_set_warnings(main ENABLE ALL AS_ERROR ALL DISABLE Annoying) # Set warning
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "AppleClang")
     target_compile_options(${LIBRARY_NAME} PUBLIC -Wno-weak-vtables)
     target_compile_options(main PUBLIC -Wno-weak-vtables)
+    # doctest build error on Apple Clang
+    add_compile_options(-Wno-zero-as-null-pointer-constant)
 endif()
 
 target_enable_lto(main optimized)  # enable link-time-optimization if available for non-debug configurations
