@@ -22,6 +22,6 @@ auto PositionRepository::GetAllOpenPositions() -> std::vector<Position> {
     return _positions;
 }
 
-auto PositionRepository::OpenPositionCount() -> int {
+auto PositionRepository::OpenPositionCount() -> user_size_t {
     return _positions.size();
 }

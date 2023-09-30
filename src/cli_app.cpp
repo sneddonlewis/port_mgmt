@@ -11,7 +11,7 @@
 CliApp::CliApp(PositionRepository positionRepository)
     : _positionRepository{positionRepository} {}
 
-auto clear_console() -> void {
+static auto clear_console() -> void {
     // Unix to clear the screen
     // CSI[2J clears screen, CSI[H moves the cursor to top-left corner
     std::cout << "\x1B[2J\x1B[H";

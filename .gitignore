@@ -34,6 +34,10 @@
 
 # Build directory
 build/
+cmake-build-debug/
 
 # Cache
 .cache/
+
+# Editor
+.idea/
