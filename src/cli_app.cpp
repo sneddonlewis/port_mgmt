@@ -1,5 +1,6 @@
 #include "cli_app.h"
 #include "position_models.h"
+#include "iposition_repository.h"
 #include "exampleConfig.h"
 
 #include <iostream>
@@ -9,7 +10,7 @@
 #include <sstream>
 #include <utility>
 
-CliApp::CliApp(std::shared_ptr<PositionRepository> positionRepository)
+CliApp::CliApp(std::shared_ptr<IPositionRepo> positionRepository)
     : _positionRepository{std::move(positionRepository)} {}
 
 static auto clear_console() -> void {
