@@ -8,6 +8,6 @@
 struct IPositionRepo {
     virtual Position OpenPosition(AddPositionRequest positionRequest) = 0;
     virtual std::vector<Position> GetAllOpenPositions() = 0;
-    virtual user_size_t OpenPositionCount() = 0;
+    virtual std::size_t OpenPositionCount() = 0;
     virtual ~IPositionRepo() = default;
 };

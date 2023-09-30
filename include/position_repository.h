@@ -10,7 +10,7 @@ public:
     PositionRepository();
     Position OpenPosition(AddPositionRequest positionRequest) override;
     std::vector<Position> GetAllOpenPositions() override;
-    user_size_t OpenPositionCount() override;
+    std::size_t OpenPositionCount() override;
 private:
     std::vector<Position> _positions;
 };
