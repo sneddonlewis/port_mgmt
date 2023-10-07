@@ -17,4 +17,5 @@ private:
     void view_positions_handler();
     void print_menu();
     void print_version_info();
+    void loadFromFileHandler();
 };

@@ -8,6 +8,7 @@
 #include <ostream>
 #include <chrono>
 #include <iomanip>
+#include <fstream>
 #include <sstream>
 #include <utility>
 
@@ -37,6 +38,9 @@ auto CliApp::loop() -> void {
             case 3:
                 print_version_info();
                 break;
+            case 4:
+                loadFromFileHandler();
+                break;
             case 0:
                 std::cout << "Bye" << std::endl;
                 break;
@@ -57,6 +61,8 @@ auto CliApp::print_menu() -> void {
         << "2. View"
         << std::endl
         << "3. Info"
+        << std::endl
+        << "4. Load From CSV"
         << std::endl
         << "0. Exit"
         << std::endl;
@@ -137,4 +143,42 @@ auto CliApp::build_add_position_request() -> AddPositionRequest {
     std::cin >> request.open_price;
 
     return request;
+}
+
+static std::vector<std::string> split(const std::string& s, char delimiter) {
+    std::vector<std::string> tokens;
+    std::string token;
+    std::istringstream tokenStream(s);
+
+    while (std::getline(tokenStream, token, delimiter)) {
+        tokens.push_back(token);
+    }
+
+    return tokens;
+}
+
+auto CliApp::loadFromFileHandler() -> void {
+    std::string file_path;
+    std::cout << "Enter path to CSV file: ";
+    std::cin >> file_path;
+
+    std::ifstream myfile;
+    myfile.open(file_path);
+    std::string myline;
+    if ( myfile.is_open() ) {
+        while ( myfile ) { // equivalent to myfile.good()
+            std::getline (myfile, myline);
+            auto parts = split(myline, ',');
+            AddPositionRequest add{
+                    parts[0],
+                    stod(parts[1]),
+                    true,
+                    stod(parts[2]),
+            };
+            _positionRepository->OpenPosition(add);
+        }
+    }
+    else {
+        std::cout << "Couldn't open file\n";
+    }
 }
