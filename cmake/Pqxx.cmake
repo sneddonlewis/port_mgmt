@@ -1,15 +1,24 @@
 include(FetchContent)
 
-#set(PostgreSQL_INCLUDE_DIR "/opt/homebrew/opt/libpq/include")
-#set(PostgreSQL_LIBRARY "/opt/homebrew/opt/libpq/lib")
-#find_package(PostgreSQL REQUIRED)
+if(APPLE)
+    # Set the paths explicitly for MacOS
+    set(PostgreSQL_INCLUDE_DIR "/opt/homebrew/opt/libpq/include")
+    set(PostgreSQL_LIBRARY "/opt/homebrew/opt/libpq/lib/libpq.dylib")
+elseif(UNIX AND NOT APPLE)  # Linux
+    # Allow the system to find it or set a probable path
+    find_package(PostgreSQL REQUIRED)
 
-# Specify paths for libpq
-set(PostgreSQL_INCLUDE_DIR "/opt/homebrew/opt/libpq/include")
-set(PostgreSQL_LIBRARY "/opt/homebrew/opt/libpq/lib/libpq.dylib")  # Adjust to .a for static linking if desired
+    if(NOT PostgreSQL_FOUND)
+        # Set probable paths for Ubuntu/RedHat
+        find_path(PostgreSQL_INCLUDE_DIR NAMES libpq-fe.h PATHS "/usr/include/postgresql" "/usr/pgsql-9.3/include/")
+        find_library(PostgreSQL_LIBRARY NAMES pq PATHS "/usr/lib" "/usr/pgsql-9.3/lib/")
+    endif()
+endif()
 
-# Require PostgreSQL (libpq)
-find_package(PostgreSQL REQUIRED)
+# Validate the paths
+if(NOT EXISTS ${PostgreSQL_INCLUDE_DIR} OR NOT EXISTS ${PostgreSQL_LIBRARY})
+    message(FATAL_ERROR "Cannot find PostgreSQL. Check your installation or specify paths manually.")
+endif()
 
 FetchContent_Declare(
         libpqxx
