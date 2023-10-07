@@ -29,6 +29,7 @@ include(Doctest)
 include(Documentation)
 include(LTO)
 include(Misc)
+include(Pqxx)
 include(Warnings)
 
 # Check for LTO support.
