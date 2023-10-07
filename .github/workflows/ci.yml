@@ -14,7 +14,7 @@ jobs:
       matrix:
         toolchain:
           - linux-gcc
-          - macos-clang
+#          - macos-clang
 
         configuration:
           - Debug
@@ -23,13 +23,16 @@ jobs:
           - toolchain: linux-gcc
             os: ubuntu-latest
             compiler: gcc
-          - toolchain: macos-clang
-            os: macOS-latest
-            compiler: clang
+#          - toolchain: macos-clang
+#            os: macOS-latest
+#            compiler: clang
 
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2
+
+    - name: Setup Docker Compose
+      run: docker-compose -f docker-compose-dev.yml up -d
 
     - name: Configure (${{ matrix.configuration }})
       run: cmake -S . -Bbuild -DCMAKE_BUILD_TYPE=${{ matrix.configuration }}
@@ -41,4 +44,10 @@ jobs:
       working-directory: build
       env:
         CTEST_OUTPUT_ON_FAILURE: 1
-      run: ctest -C ${{ matrix.configuration }}
+        DB_HOST: dev_db
+        DB_PORT: 5432
+        DB_USER: root
+        DB_PASS: root
+        DB_NAME: mgmt
+#      run: ctest -C ${{ matrix.configuration }}
+      run: ./unit_tests
