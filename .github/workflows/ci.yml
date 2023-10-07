@@ -44,4 +44,9 @@ jobs:
       working-directory: build
       env:
         CTEST_OUTPUT_ON_FAILURE: 1
+        DB_HOST: dev_db
+        DB_PORT: 5432
+        DB_USER: root
+        DB_PASS: root
+        DB_NAME: mgmt
       run: ctest -C ${{ matrix.configuration }}
