@@ -31,18 +31,6 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v2
 
-    - name: Install dependencies
-      run: |
-        if [[ "${{ runner.os }}" == "Linux" ]]; then
-          sudo apt-get update
-          sudo apt-get install -y libpq-dev
-        elif [[ "${{ runner.os }}" == "macOS" ]]; then
-          brew install libpq
-          echo "LDFLAGS=-L/opt/homebrew/opt/libpq/lib" >> $GITHUB_ENV
-          echo "CPPFLAGS=-I/opt/homebrew/opt/libpq/include" >> $GITHUB_ENV
-          echo "PKG_CONFIG_PATH=/opt/homebrew/opt/libpq/lib/pkgconfig" >> $GITHUB_ENV
-        fi
-
     - name: Configure (${{ matrix.configuration }})
       run: cmake -S . -Bbuild -DCMAKE_BUILD_TYPE=${{ matrix.configuration }}
 
